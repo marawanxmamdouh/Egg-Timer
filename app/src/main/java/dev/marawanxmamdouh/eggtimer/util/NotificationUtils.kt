@@ -10,15 +10,15 @@ import androidx.core.app.NotificationCompat
 import dev.marawanxmamdouh.eggtimer.MainActivity
 import dev.marawanxmamdouh.eggtimer.R
 
-private val NOTIFICATION_ID = 0
-private val REQUEST_CODE = 0
-private val FLAGS = 0
+private const val NOTIFICATION_ID = 0
+private const val REQUEST_CODE = 0
+private const val FLAGS = 0
 
 // TODO: Step 1.1 extension function to send messages (GIVEN)
 /**
  * Builds and delivers the notification.
  *
- * @param context, activity context.
+ * @param applicationContext, activity context.
  */
 @RequiresApi(Build.VERSION_CODES.M)
 fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
