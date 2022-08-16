@@ -2,6 +2,7 @@ package dev.marawanxmamdouh.eggtimer.util
 
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_ONE_SHOT
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -10,10 +11,10 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import dev.marawanxmamdouh.eggtimer.MainActivity
 import dev.marawanxmamdouh.eggtimer.R
+import dev.marawanxmamdouh.eggtimer.receiver.SnoozeReceiver
 
 private const val NOTIFICATION_ID = 0
 private const val REQUEST_CODE = 0
-private const val FLAGS = 0
 
 // TODO: Step 1.1 extension function to send messages (GIVEN)
 /**
@@ -44,7 +45,14 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .bigPicture(eggImage)
         .bigLargeIcon(null)
 
-    // TODO: Step 2.2 add snooze action
+    // Add snooze action
+    val snoozeIntent = Intent(applicationContext, SnoozeReceiver::class.java)
+    val snoozePendingIntent: PendingIntent = PendingIntent.getBroadcast(
+        applicationContext,
+        REQUEST_CODE,
+        snoozeIntent,
+        PendingIntent.FLAG_IMMUTABLE or FLAG_ONE_SHOT
+    )
 
     /**
      * Build the notification
@@ -62,6 +70,11 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
         .setAutoCancel(true)
         .setStyle(bigPicStyle)
         .setLargeIcon(eggImage)
+        .addAction(
+            R.drawable.egg_icon,
+            applicationContext.getString(R.string.snooze),
+            snoozePendingIntent
+        )
 
     notify(NOTIFICATION_ID, builder.build())
 
