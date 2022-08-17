@@ -11,12 +11,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.messaging.FirebaseMessaging
 import dev.marawanxmamdouh.eggtimer.R
 import dev.marawanxmamdouh.eggtimer.databinding.FragmentEggTimerBinding
 
-class EggTimerFragment : Fragment() {
+private const val TOPIC = "breakfast"
 
-    private val TOPIC = "breakfast"
+class EggTimerFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +43,8 @@ class EggTimerFragment : Fragment() {
             getString(R.string.breakfast_notification_channel_id),
             getString(R.string.breakfast_notification_channel_name)
         )
+
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
 
         return binding.root
     }
